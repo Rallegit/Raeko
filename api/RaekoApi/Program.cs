@@ -4,7 +4,16 @@ using RaekoApi.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy => policy
+        .WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod()));
+
 
 builder.Services.AddDbContext<RaekoDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
